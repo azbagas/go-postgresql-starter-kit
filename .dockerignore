@@ -1,0 +1,32 @@
+.git
+.gitignore
+.env
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Go build artifacts
+/main
+/cmd/web/main
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# Testing and local assets
+test/
+test_filter.log
+test_output.txt
+
+# Documentation and design
+api/
+architecture.excalidraw
+architecture.png
+README.md
+AGENTS.md
+LICENSE.txt
+
+# Database scripts (migrations run outside app typically)
+db/migrations/

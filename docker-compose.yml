@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-password}
+      POSTGRES_DB: ${DATABASE_NAME:-go_postgresql_starter_kit}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: go_app
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-3000}:${WEB_PORT:-3000}"
+    env_file:
+      - .env
+    environment:
+      # Override the host to point to the docker-compose database service
+      DATABASE_HOST: db
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
