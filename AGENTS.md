@@ -45,7 +45,7 @@ internal/model/                 -> request/response DTOs
 internal/model/converter/       -> entity <-> model mappers
 db/migrations/                  -> SQL up/down migrations
 test/                           -> integration tests
-api/api-spec.json               -> API specification
+api/swagger.json, swagger.yaml  -> Generated API specification
 ```
 
 **Dependency rule:** delivery → usecase → repository/gateway → entity. Never reverse. Models cross layers; entities stay below usecase.
@@ -96,6 +96,9 @@ go build ./...
 # Run web server
 go run cmd/web/main.go
 
+# Generate API Docs
+go generate ./...
+
 # Tests (integration; requires PostgreSQL)
 go test -v ./test/
 
@@ -114,7 +117,7 @@ migrate -database "postgres://postgres:postgres@localhost:5432/go_postgresql_sta
 - `go vet ./...` clean.
 - `go fmt ./...` produces no diff.
 - `go test -v ./test/` all green (integration tests in `test/` exercise the Fiber app end-to-end).
-- New endpoints reflected in `api/api-spec.json`.
+- New endpoints have matching Swagger annotations and are generated into `api/swagger.json`.
 - New entities have matching migration up/down pair.
 - `README.md` updated if commands, config keys, or run modes changed.
 - `AGENTS.md` updated if AI instructions, project guidelines, or definitions must be updated.

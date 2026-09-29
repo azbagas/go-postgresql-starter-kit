@@ -37,8 +37,14 @@ A Golang PostgreSQL starter kit. This is the result of adjustments from reposito
 All configuration is managed via environment variables and a strongly-typed `Config` struct. For local development, use a `.env` file in the root directory. In production, provide the OS environment variables directly.
 
 ## API Spec
+ 
+All API Spec is in `api` folder (`swagger.json` and `swagger.yaml`), generated from code comments via `swag`.
 
-All API Spec is in `api` folder.
+To regenerate the API documentation:
+
+```shell
+go generate ./...
+```
 
 ## Database Migration
 

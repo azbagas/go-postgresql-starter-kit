@@ -21,6 +21,16 @@ func NewUserController(useCase *usecase.UserUseCase, logger *logrus.Logger) *Use
 	}
 }
 
+// Register godoc
+// @Summary      Register a new user
+// @Description  Register a new user in the system
+// @Tags         Users
+// @Accept       json
+// @Produce      json
+// @Param        request body model.RegisterUserRequest true "User Registration Info"
+// @Success      200 {object} model.WebResponse[model.UserResponse]
+// @Failure      400 {object} model.ErrorResponse
+// @Router       /api/users [post]
 func (c *UserController) Register(ctx *fiber.Ctx) error {
 	request := new(model.RegisterUserRequest)
 	err := ctx.BodyParser(request)
@@ -38,6 +48,17 @@ func (c *UserController) Register(ctx *fiber.Ctx) error {
 	return ctx.JSON(model.WebResponse[*model.UserResponse]{Data: response})
 }
 
+// Login godoc
+// @Summary      Login user
+// @Description  Authenticate user and obtain authentication token
+// @Tags         Users
+// @Accept       json
+// @Produce      json
+// @Param        request body model.LoginUserRequest true "User Login Info"
+// @Success      200 {object} model.WebResponse[model.UserResponse]
+// @Failure      400 {object} model.ErrorResponse
+// @Failure      401 {object} model.ErrorResponse
+// @Router       /api/users/_login [post]
 func (c *UserController) Login(ctx *fiber.Ctx) error {
 	request := new(model.LoginUserRequest)
 	err := ctx.BodyParser(request)
@@ -55,6 +76,16 @@ func (c *UserController) Login(ctx *fiber.Ctx) error {
 	return ctx.JSON(model.WebResponse[*model.UserResponse]{Data: response})
 }
 
+// Current godoc
+// @Summary      Get current user profile
+// @Description  Retrieve profile information for the authenticated user
+// @Tags         Users
+// @Produce      json
+// @Security     ApiKeyAuth
+// @Success      200 {object} model.WebResponse[model.UserResponse]
+// @Failure      401 {object} model.ErrorResponse
+// @Failure      404 {object} model.ErrorResponse
+// @Router       /api/users/_current [get]
 func (c *UserController) Current(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 
@@ -71,6 +102,15 @@ func (c *UserController) Current(ctx *fiber.Ctx) error {
 	return ctx.JSON(model.WebResponse[*model.UserResponse]{Data: response})
 }
 
+// Logout godoc
+// @Summary      Logout current user
+// @Description  Invalidate authentication token for the current user
+// @Tags         Users
+// @Produce      json
+// @Security     ApiKeyAuth
+// @Success      200 {object} model.WebResponse[bool]
+// @Failure      401 {object} model.ErrorResponse
+// @Router       /api/users [delete]
 func (c *UserController) Logout(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 
@@ -87,6 +127,18 @@ func (c *UserController) Logout(ctx *fiber.Ctx) error {
 	return ctx.JSON(model.WebResponse[bool]{Data: response})
 }
 
+// Update godoc
+// @Summary      Update current user
+// @Description  Update profile of current authenticated user
+// @Tags         Users
+// @Accept       json
+// @Produce      json
+// @Security     ApiKeyAuth
+// @Param        request body model.UpdateUserRequest true "User Update Info"
+// @Success      200 {object} model.WebResponse[model.UserResponse]
+// @Failure      400 {object} model.ErrorResponse
+// @Failure      401 {object} model.ErrorResponse
+// @Router       /api/users/_current [patch]
 func (c *UserController) Update(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 

@@ -1,0 +1,707 @@
+basePath: /
+definitions:
+  model.AddressResponse:
+    properties:
+      city:
+        type: string
+      country:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: string
+      postal_code:
+        type: string
+      province:
+        type: string
+      street:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  model.ContactResponse:
+    properties:
+      addresses:
+        items:
+          $ref: '#/definitions/model.AddressResponse'
+        type: array
+      created_at:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      phone:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  model.CreateAddressRequest:
+    properties:
+      city:
+        maxLength: 255
+        type: string
+      country:
+        maxLength: 100
+        type: string
+      postal_code:
+        maxLength: 10
+        type: string
+      province:
+        maxLength: 255
+        type: string
+      street:
+        maxLength: 255
+        type: string
+    type: object
+  model.CreateContactRequest:
+    properties:
+      email:
+        maxLength: 200
+        type: string
+      first_name:
+        maxLength: 100
+        type: string
+      last_name:
+        maxLength: 100
+        type: string
+      phone:
+        maxLength: 20
+        type: string
+    required:
+    - first_name
+    type: object
+  model.ErrorResponse:
+    properties:
+      errors:
+        type: string
+    type: object
+  model.LoginUserRequest:
+    properties:
+      id:
+        maxLength: 100
+        type: string
+      password:
+        maxLength: 100
+        type: string
+    required:
+    - id
+    - password
+    type: object
+  model.PageMetadata:
+    properties:
+      page:
+        type: integer
+      size:
+        type: integer
+      total_item:
+        type: integer
+      total_page:
+        type: integer
+    type: object
+  model.PageResponse-model_ContactResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/model.ContactResponse'
+        type: array
+      paging:
+        $ref: '#/definitions/model.PageMetadata'
+    type: object
+  model.RegisterUserRequest:
+    properties:
+      id:
+        maxLength: 100
+        type: string
+      name:
+        maxLength: 100
+        type: string
+      password:
+        maxLength: 100
+        type: string
+    required:
+    - id
+    - name
+    - password
+    type: object
+  model.UpdateAddressRequest:
+    properties:
+      city:
+        maxLength: 255
+        type: string
+      country:
+        maxLength: 100
+        type: string
+      postal_code:
+        maxLength: 10
+        type: string
+      province:
+        maxLength: 255
+        type: string
+      street:
+        maxLength: 255
+        type: string
+    type: object
+  model.UpdateContactRequest:
+    properties:
+      email:
+        maxLength: 200
+        type: string
+      first_name:
+        maxLength: 100
+        type: string
+      last_name:
+        maxLength: 100
+        type: string
+      phone:
+        maxLength: 20
+        type: string
+    required:
+    - first_name
+    type: object
+  model.UpdateUserRequest:
+    properties:
+      name:
+        maxLength: 100
+        type: string
+      password:
+        maxLength: 100
+        type: string
+    type: object
+  model.UserResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      token:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  model.WebResponse-array_model_AddressResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/model.AddressResponse'
+        type: array
+    type: object
+  model.WebResponse-bool:
+    properties:
+      data:
+        type: boolean
+    type: object
+  model.WebResponse-model_AddressResponse:
+    properties:
+      data:
+        $ref: '#/definitions/model.AddressResponse'
+    type: object
+  model.WebResponse-model_ContactResponse:
+    properties:
+      data:
+        $ref: '#/definitions/model.ContactResponse'
+    type: object
+  model.WebResponse-model_UserResponse:
+    properties:
+      data:
+        $ref: '#/definitions/model.UserResponse'
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: Go PostgreSQL Starter Kit API Documentation
+  title: Go PostgreSQL Starter Kit
+  version: 1.0.0
+paths:
+  /api/contacts:
+    get:
+      description: Search and paginate contacts of the authenticated user
+      parameters:
+      - description: Contact name filter
+        in: query
+        name: name
+        type: string
+      - description: Contact email filter
+        in: query
+        name: email
+        type: string
+      - description: Contact phone filter
+        in: query
+        name: phone
+        type: string
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Page size
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.PageResponse-model_ContactResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List contacts
+      tags:
+      - Contacts
+    post:
+      consumes:
+      - application/json
+      description: Create a new contact for the authenticated user
+      parameters:
+      - description: Contact details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateContactRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebResponse-model_ContactResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create contact
+      tags:
+      - Contacts
+  /api/contacts/{contactId}:
+    delete:
+      description: Delete a contact by ID
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebResponse-bool'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete contact
+      tags:
+      - Contacts
+    get:
+      description: Retrieve single contact by its ID
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebResponse-model_ContactResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get contact by ID
+      tags:
+      - Contacts
+    put:
+      consumes:
+      - application/json
+      description: Update an existing contact by ID
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      - description: Updated contact details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateContactRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebResponse-model_ContactResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update contact
+      tags:
+      - Contacts
+  /api/contacts/{contactId}/addresses:
+    get:
+      description: List all addresses belonging to a contact
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebResponse-array_model_AddressResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List addresses
+      tags:
+      - Addresses
+    post:
+      consumes:
+      - application/json
+      description: Create a new address for a contact
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      - description: Address details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.CreateAddressRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebResponse-model_AddressResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create address
+      tags:
+      - Addresses
+  /api/contacts/{contactId}/addresses/{addressId}:
+    delete:
+      description: Delete an address from a contact
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      - description: Address ID
+        in: path
+        name: addressId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebResponse-bool'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete address
+      tags:
+      - Addresses
+    get:
+      description: Get a specific address of a contact
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      - description: Address ID
+        in: path
+        name: addressId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebResponse-model_AddressResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get address
+      tags:
+      - Addresses
+    put:
+      consumes:
+      - application/json
+      description: Update a specific address of a contact
+      parameters:
+      - description: Contact ID
+        in: path
+        name: contactId
+        required: true
+        type: string
+      - description: Address ID
+        in: path
+        name: addressId
+        required: true
+        type: string
+      - description: Updated address details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateAddressRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebResponse-model_AddressResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update address
+      tags:
+      - Addresses
+  /api/users:
+    delete:
+      description: Invalidate authentication token for the current user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebResponse-bool'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Logout current user
+      tags:
+      - Users
+    post:
+      consumes:
+      - application/json
+      description: Register a new user in the system
+      parameters:
+      - description: User Registration Info
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.RegisterUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebResponse-model_UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Register a new user
+      tags:
+      - Users
+  /api/users/_current:
+    get:
+      description: Retrieve profile information for the authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebResponse-model_UserResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get current user profile
+      tags:
+      - Users
+    patch:
+      consumes:
+      - application/json
+      description: Update profile of current authenticated user
+      parameters:
+      - description: User Update Info
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebResponse-model_UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update current user
+      tags:
+      - Users
+  /api/users/_login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user and obtain authentication token
+      parameters:
+      - description: User Login Info
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.WebResponse-model_UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Login user
+      tags:
+      - Users
+securityDefinitions:
+  ApiKeyAuth:
+    description: Enter authentication token
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -5,6 +5,17 @@ import (
 	"go-postgresql-starter-kit/internal/config"
 )
 
+//go:generate swag init -g main.go -d .,../../internal/delivery/http,../../internal/model -o ../../api --ot json,yaml --parseInternal
+
+// @title           Go PostgreSQL Starter Kit
+// @version         1.0.0
+// @description     Go PostgreSQL Starter Kit API Documentation
+// @host            localhost:3000
+// @BasePath        /
+// @securityDefinitions.apikey  ApiKeyAuth
+// @in                          header
+// @name                        Authorization
+// @description                 Enter authentication token
 func main() {
 	appConfig := config.NewConfig()
 	log := config.NewLogger(appConfig)

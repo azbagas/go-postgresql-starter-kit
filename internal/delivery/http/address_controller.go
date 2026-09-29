@@ -21,6 +21,20 @@ func NewAddressController(useCase *usecase.AddressUseCase, log *logrus.Logger) *
 	}
 }
 
+// Create godoc
+// @Summary      Create address
+// @Description  Create a new address for a contact
+// @Tags         Addresses
+// @Accept       json
+// @Produce      json
+// @Security     ApiKeyAuth
+// @Param        contactId path string true "Contact ID"
+// @Param        request   body model.CreateAddressRequest true "Address details"
+// @Success      200 {object} model.WebResponse[model.AddressResponse]
+// @Failure      400 {object} model.ErrorResponse
+// @Failure      401 {object} model.ErrorResponse
+// @Failure      404 {object} model.ErrorResponse
+// @Router       /api/contacts/{contactId}/addresses [post]
 func (c *AddressController) Create(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 
@@ -42,6 +56,17 @@ func (c *AddressController) Create(ctx *fiber.Ctx) error {
 	return ctx.JSON(model.WebResponse[*model.AddressResponse]{Data: response})
 }
 
+// List godoc
+// @Summary      List addresses
+// @Description  List all addresses belonging to a contact
+// @Tags         Addresses
+// @Produce      json
+// @Security     ApiKeyAuth
+// @Param        contactId path string true "Contact ID"
+// @Success      200 {object} model.WebResponse[[]model.AddressResponse]
+// @Failure      401 {object} model.ErrorResponse
+// @Failure      404 {object} model.ErrorResponse
+// @Router       /api/contacts/{contactId}/addresses [get]
 func (c *AddressController) List(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 	contactId := ctx.Params("contactId")
@@ -60,6 +85,18 @@ func (c *AddressController) List(ctx *fiber.Ctx) error {
 	return ctx.JSON(model.WebResponse[[]model.AddressResponse]{Data: responses})
 }
 
+// Get godoc
+// @Summary      Get address
+// @Description  Get a specific address of a contact
+// @Tags         Addresses
+// @Produce      json
+// @Security     ApiKeyAuth
+// @Param        contactId path string true "Contact ID"
+// @Param        addressId path string true "Address ID"
+// @Success      200 {object} model.WebResponse[model.AddressResponse]
+// @Failure      401 {object} model.ErrorResponse
+// @Failure      404 {object} model.ErrorResponse
+// @Router       /api/contacts/{contactId}/addresses/{addressId} [get]
 func (c *AddressController) Get(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 	contactId := ctx.Params("contactId")
@@ -80,6 +117,21 @@ func (c *AddressController) Get(ctx *fiber.Ctx) error {
 	return ctx.JSON(model.WebResponse[*model.AddressResponse]{Data: response})
 }
 
+// Update godoc
+// @Summary      Update address
+// @Description  Update a specific address of a contact
+// @Tags         Addresses
+// @Accept       json
+// @Produce      json
+// @Security     ApiKeyAuth
+// @Param        contactId path string true "Contact ID"
+// @Param        addressId path string true "Address ID"
+// @Param        request   body model.UpdateAddressRequest true "Updated address details"
+// @Success      200 {object} model.WebResponse[model.AddressResponse]
+// @Failure      400 {object} model.ErrorResponse
+// @Failure      401 {object} model.ErrorResponse
+// @Failure      404 {object} model.ErrorResponse
+// @Router       /api/contacts/{contactId}/addresses/{addressId} [put]
 func (c *AddressController) Update(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 
@@ -102,6 +154,18 @@ func (c *AddressController) Update(ctx *fiber.Ctx) error {
 	return ctx.JSON(model.WebResponse[*model.AddressResponse]{Data: response})
 }
 
+// Delete godoc
+// @Summary      Delete address
+// @Description  Delete an address from a contact
+// @Tags         Addresses
+// @Produce      json
+// @Security     ApiKeyAuth
+// @Param        contactId path string true "Contact ID"
+// @Param        addressId path string true "Address ID"
+// @Success      200 {object} model.WebResponse[bool]
+// @Failure      401 {object} model.ErrorResponse
+// @Failure      404 {object} model.ErrorResponse
+// @Router       /api/contacts/{contactId}/addresses/{addressId} [delete]
 func (c *AddressController) Delete(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 	contactId := ctx.Params("contactId")

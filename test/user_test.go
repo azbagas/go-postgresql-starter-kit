@@ -67,7 +67,7 @@ func TestRegisterError(t *testing.T) {
 	bytes, err := io.ReadAll(response.Body)
 	assert.Nil(t, err)
 
-	responseBody := new(model.WebResponse[model.UserResponse])
+	responseBody := new(model.ErrorResponse)
 	err = json.Unmarshal(bytes, responseBody)
 	assert.Nil(t, err)
 
@@ -98,7 +98,7 @@ func TestRegisterDuplicate(t *testing.T) {
 	bytes, err := io.ReadAll(response.Body)
 	assert.Nil(t, err)
 
-	responseBody := new(model.WebResponse[model.UserResponse])
+	responseBody := new(model.ErrorResponse)
 	err = json.Unmarshal(bytes, responseBody)
 	assert.Nil(t, err)
 
@@ -162,7 +162,7 @@ func TestLoginWrongUsername(t *testing.T) {
 	bytes, err := io.ReadAll(response.Body)
 	assert.Nil(t, err)
 
-	responseBody := new(model.WebResponse[model.UserResponse])
+	responseBody := new(model.ErrorResponse)
 	err = json.Unmarshal(bytes, responseBody)
 	assert.Nil(t, err)
 
@@ -192,7 +192,7 @@ func TestLoginWrongPassword(t *testing.T) {
 	bytes, err := io.ReadAll(response.Body)
 	assert.Nil(t, err)
 
-	responseBody := new(model.WebResponse[model.UserResponse])
+	responseBody := new(model.ErrorResponse)
 	err = json.Unmarshal(bytes, responseBody)
 	assert.Nil(t, err)
 
@@ -242,7 +242,7 @@ func TestLogoutWrongAuthorization(t *testing.T) {
 	bytes, err := io.ReadAll(response.Body)
 	assert.Nil(t, err)
 
-	responseBody := new(model.WebResponse[bool])
+	responseBody := new(model.ErrorResponse)
 	err = json.Unmarshal(bytes, responseBody)
 	assert.Nil(t, err)
 
@@ -295,7 +295,7 @@ func TestGetCurrentUserFailed(t *testing.T) {
 	bytes, err := io.ReadAll(response.Body)
 	assert.Nil(t, err)
 
-	responseBody := new(model.WebResponse[model.UserResponse])
+	responseBody := new(model.ErrorResponse)
 	err = json.Unmarshal(bytes, responseBody)
 	assert.Nil(t, err)
 
@@ -405,7 +405,7 @@ func TestUpdateFailed(t *testing.T) {
 	bytes, err := io.ReadAll(response.Body)
 	assert.Nil(t, err)
 
-	responseBody := new(model.WebResponse[model.UserResponse])
+	responseBody := new(model.ErrorResponse)
 	err = json.Unmarshal(bytes, responseBody)
 	assert.Nil(t, err)
 

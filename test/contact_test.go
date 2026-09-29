@@ -82,7 +82,7 @@ func TestCreateContactFailed(t *testing.T) {
 	bytes, err := io.ReadAll(response.Body)
 	assert.Nil(t, err)
 
-	responseBody := new(model.WebResponse[model.ContactResponse])
+	responseBody := new(model.ErrorResponse)
 	err = json.Unmarshal(bytes, responseBody)
 	assert.Nil(t, err)
 
@@ -338,7 +338,7 @@ func TestSearchContact(t *testing.T) {
 	bytes, err := io.ReadAll(response.Body)
 	assert.Nil(t, err)
 
-	responseBody := new(model.WebResponse[[]model.ContactResponse])
+	responseBody := new(model.PageResponse[model.ContactResponse])
 	err = json.Unmarshal(bytes, responseBody)
 	assert.Nil(t, err)
 
@@ -369,7 +369,7 @@ func TestSearchContactWithPagination(t *testing.T) {
 	bytes, err := io.ReadAll(response.Body)
 	assert.Nil(t, err)
 
-	responseBody := new(model.WebResponse[[]model.ContactResponse])
+	responseBody := new(model.PageResponse[model.ContactResponse])
 	err = json.Unmarshal(bytes, responseBody)
 	assert.Nil(t, err)
 
@@ -400,7 +400,7 @@ func TestSearchContactWithFilter(t *testing.T) {
 	bytes, err := io.ReadAll(response.Body)
 	assert.Nil(t, err)
 
-	responseBody := new(model.WebResponse[[]model.ContactResponse])
+	responseBody := new(model.PageResponse[model.ContactResponse])
 	err = json.Unmarshal(bytes, responseBody)
 	assert.Nil(t, err)
 

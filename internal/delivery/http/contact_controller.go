@@ -22,6 +22,18 @@ func NewContactController(useCase *usecase.ContactUseCase, log *logrus.Logger) *
 	}
 }
 
+// Create godoc
+// @Summary      Create contact
+// @Description  Create a new contact for the authenticated user
+// @Tags         Contacts
+// @Accept       json
+// @Produce      json
+// @Security     ApiKeyAuth
+// @Param        request body model.CreateContactRequest true "Contact details"
+// @Success      200 {object} model.WebResponse[model.ContactResponse]
+// @Failure      400 {object} model.ErrorResponse
+// @Failure      401 {object} model.ErrorResponse
+// @Router       /api/contacts [post]
 func (c *ContactController) Create(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 
@@ -41,6 +53,20 @@ func (c *ContactController) Create(ctx *fiber.Ctx) error {
 	return ctx.JSON(model.WebResponse[*model.ContactResponse]{Data: response})
 }
 
+// List godoc
+// @Summary      List contacts
+// @Description  Search and paginate contacts of the authenticated user
+// @Tags         Contacts
+// @Produce      json
+// @Security     ApiKeyAuth
+// @Param        name  query string false "Contact name filter"
+// @Param        email query string false "Contact email filter"
+// @Param        phone query string false "Contact phone filter"
+// @Param        page  query int    false "Page number" default(1)
+// @Param        size  query int    false "Page size" default(10)
+// @Success      200 {object} model.PageResponse[model.ContactResponse]
+// @Failure      401 {object} model.ErrorResponse
+// @Router       /api/contacts [get]
 func (c *ContactController) List(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 
@@ -66,12 +92,23 @@ func (c *ContactController) List(ctx *fiber.Ctx) error {
 		TotalPage: int64(math.Ceil(float64(total) / float64(request.Size))),
 	}
 
-	return ctx.JSON(model.WebResponse[[]model.ContactResponse]{
+	return ctx.JSON(model.PageResponse[model.ContactResponse]{
 		Data:   responses,
 		Paging: paging,
 	})
 }
 
+// Get godoc
+// @Summary      Get contact by ID
+// @Description  Retrieve single contact by its ID
+// @Tags         Contacts
+// @Produce      json
+// @Security     ApiKeyAuth
+// @Param        contactId path string true "Contact ID"
+// @Success      200 {object} model.WebResponse[model.ContactResponse]
+// @Failure      401 {object} model.ErrorResponse
+// @Failure      404 {object} model.ErrorResponse
+// @Router       /api/contacts/{contactId} [get]
 func (c *ContactController) Get(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 
@@ -89,6 +126,20 @@ func (c *ContactController) Get(ctx *fiber.Ctx) error {
 	return ctx.JSON(model.WebResponse[*model.ContactResponse]{Data: response})
 }
 
+// Update godoc
+// @Summary      Update contact
+// @Description  Update an existing contact by ID
+// @Tags         Contacts
+// @Accept       json
+// @Produce      json
+// @Security     ApiKeyAuth
+// @Param        contactId path string true "Contact ID"
+// @Param        request   body model.UpdateContactRequest true "Updated contact details"
+// @Success      200 {object} model.WebResponse[model.ContactResponse]
+// @Failure      400 {object} model.ErrorResponse
+// @Failure      401 {object} model.ErrorResponse
+// @Failure      404 {object} model.ErrorResponse
+// @Router       /api/contacts/{contactId} [put]
 func (c *ContactController) Update(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 
@@ -110,6 +161,17 @@ func (c *ContactController) Update(ctx *fiber.Ctx) error {
 	return ctx.JSON(model.WebResponse[*model.ContactResponse]{Data: response})
 }
 
+// Delete godoc
+// @Summary      Delete contact
+// @Description  Delete a contact by ID
+// @Tags         Contacts
+// @Produce      json
+// @Security     ApiKeyAuth
+// @Param        contactId path string true "Contact ID"
+// @Success      200 {object} model.WebResponse[bool]
+// @Failure      401 {object} model.ErrorResponse
+// @Failure      404 {object} model.ErrorResponse
+// @Router       /api/contacts/{contactId} [delete]
 func (c *ContactController) Delete(ctx *fiber.Ctx) error {
 	auth := middleware.GetUser(ctx)
 	contactId := ctx.Params("contactId")
