@@ -122,8 +122,25 @@ migrate -database "postgres://postgres:postgres@localhost:5432/go_postgresql_sta
 - `README.md` updated if commands, config keys, or run modes changed.
 - `AGENTS.md` updated if AI instructions, project guidelines, or definitions must be updated.
 
+**Git & Commit Guidelines**
+
+- **Commit only when explicitly instructed**: Never commit automatically or proactively. Only execute git commits when the user explicitly requests it (e.g., "commit", "commit this", "commit the changes").
+- **Commit message format**: Strictly follow the Conventional Commits format:
+  ```
+  <type>(<scope>): <short summary in imperative mood, lowercase, no trailing period>
+
+  [optional body explaining rationale or context]
+  ```
+  - **Types**: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `perf`.
+  - **Scopes**: Name of the affected business domain/feature (e.g., `<domain>`, `<feature>`) or architectural layer / cross-cutting concern (e.g., `config`, `delivery`, `usecase`, `repository`, `entity`, `model`, `migration`, `api`, `auth`, `deps`).
+  - **Examples**:
+    - `feat(api): automate OpenAPI documentation generation with swag and separate response DTOs`
+    - `refactor(mod): update module path to github.com/azbagas/go-postgresql-starter-kit`
+    - `fix(<domain>): validate resource ownership before update`
+
 ## 5. Hard Constraints & Boundaries
 
+- **Do not** commit changes to git unless explicitly requested by the user.
 - **Do not** add new dependencies to `go.mod` without explicit user confirmation. Reuse what is already imported.
 - **Do not** delete or rewrite existing comments, the API spec, migrations, or `README.md` content unless asked.
 - **Do not** edit applied migrations in `db/migrations/` — always create a new pair.
