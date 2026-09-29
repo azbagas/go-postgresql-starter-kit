@@ -1,7 +1,7 @@
 package test
 
 import (
-	"go-postgresql-starter-kit/internal/entity"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/entity"
 	"strconv"
 	"testing"
 

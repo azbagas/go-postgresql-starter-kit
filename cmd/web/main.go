@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go-postgresql-starter-kit/internal/config"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/config"
 )
 
 //go:generate swag init -g main.go -d .,../../internal/delivery/http,../../internal/model -o ../../api --ot json,yaml --parseInternal

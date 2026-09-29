@@ -1,9 +1,9 @@
 package http
 
 import (
-	"go-postgresql-starter-kit/internal/delivery/http/middleware"
-	"go-postgresql-starter-kit/internal/model"
-	"go-postgresql-starter-kit/internal/usecase"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/delivery/http/middleware"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/model"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/usecase"
 	"math"
 
 	"github.com/gofiber/fiber/v2"

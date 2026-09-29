@@ -1,7 +1,7 @@
 package route
 
 import (
-	"go-postgresql-starter-kit/internal/delivery/http"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/delivery/http"
 
 	"github.com/gofiber/fiber/v2"
 )

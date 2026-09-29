@@ -2,10 +2,10 @@ package usecase
 
 import (
 	"context"
-	"go-postgresql-starter-kit/internal/entity"
-	"go-postgresql-starter-kit/internal/model"
-	"go-postgresql-starter-kit/internal/model/converter"
-	"go-postgresql-starter-kit/internal/repository"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/entity"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/model"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/model/converter"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/repository"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"

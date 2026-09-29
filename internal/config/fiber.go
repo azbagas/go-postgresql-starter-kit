@@ -1,7 +1,7 @@
 package config
 
 import (
-	"go-postgresql-starter-kit/internal/model"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/model"
 
 	"github.com/gofiber/fiber/v2"
 )

@@ -2,8 +2,8 @@ package test
 
 import (
 	"encoding/json"
-	"go-postgresql-starter-kit/internal/entity"
-	"go-postgresql-starter-kit/internal/model"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/entity"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/model"
 	"io"
 	"net/http"
 	"net/http/httptest"

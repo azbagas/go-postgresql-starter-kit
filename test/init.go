@@ -1,7 +1,7 @@
 package test
 
 import (
-	"go-postgresql-starter-kit/internal/config"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/config"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"

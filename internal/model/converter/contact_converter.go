@@ -1,8 +1,8 @@
 package converter
 
 import (
-	"go-postgresql-starter-kit/internal/entity"
-	"go-postgresql-starter-kit/internal/model"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/entity"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/model"
 )
 
 func ContactToResponse(contact *entity.Contact) *model.ContactResponse {

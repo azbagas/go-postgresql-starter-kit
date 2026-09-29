@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"go-postgresql-starter-kit/internal/entity"
-	"go-postgresql-starter-kit/internal/model"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/entity"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/model"
 
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"

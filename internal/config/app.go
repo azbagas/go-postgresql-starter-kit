@@ -1,11 +1,11 @@
 package config
 
 import (
-	"go-postgresql-starter-kit/internal/delivery/http"
-	"go-postgresql-starter-kit/internal/delivery/http/middleware"
-	"go-postgresql-starter-kit/internal/delivery/http/route"
-	"go-postgresql-starter-kit/internal/repository"
-	"go-postgresql-starter-kit/internal/usecase"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/delivery/http"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/delivery/http/middleware"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/delivery/http/route"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/repository"
+	"github.com/azbagas/go-postgresql-starter-kit/internal/usecase"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"

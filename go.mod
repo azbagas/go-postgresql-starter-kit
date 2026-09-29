@@ -1,4 +1,4 @@
-module go-postgresql-starter-kit
+module github.com/azbagas/go-postgresql-starter-kit
 
 go 1.25
 
